@@ -1,0 +1,1161 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": "-- Grafana --",
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "gnetId": null,
+  "graphTooltip": 0,
+  "id": 2,
+  "links": [],
+  "panels": [
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "-- Mixed --",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "watt"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Sun altitude"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "degree"
+              }
+            ]
+          }
+        ]
+      },
+      "fill": 2,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 14,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "hiddenSeries": false,
+      "id": 12,
+      "legend": {
+        "alignAsTable": false,
+        "avg": false,
+        "current": true,
+        "max": false,
+        "min": false,
+        "rightSide": false,
+        "show": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 2,
+      "nullPointMode": "null",
+      "options": {
+        "alertThreshold": false
+      },
+      "percentage": false,
+      "pluginVersion": "7.3.4",
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [
+        {
+          "alias": "Abregelung",
+          "color": "#B877D9",
+          "dashLength": 2,
+          "dashes": true,
+          "fill": 0
+        },
+        {
+          "alias": "Netzbezug AC",
+          "color": "#F2495C"
+        },
+        {
+          "alias": "Erzeugung AC",
+          "color": "#37872D"
+        },
+        {
+          "alias": "Sun altitude",
+          "color": "#FFCB7D",
+          "dashes": true,
+          "fill": 1,
+          "fillBelowTo": "Sun altitude",
+          "legend": false,
+          "lines": false,
+          "linewidth": 1,
+          "yaxis": 2
+        },
+        {
+          "alias": "Sun altitude",
+          "lines": false
+        }
+      ],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "alias": "Netzbezug AC",
+          "datasource": "influxdb-telegraf",
+          "groupBy": [],
+          "measurement": "BB-solar",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "B",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "devices:local_HomeGrid_P"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": []
+        },
+        {
+          "alias": "Erzeugung AC",
+          "datasource": "influxdb-telegraf",
+          "groupBy": [],
+          "hide": false,
+          "measurement": "BB-solar",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "C",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "devices:local:ac_InvOut_P"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": []
+        },
+        {
+          "alias": "Hausverbrauch AC",
+          "datasource": "influxdb-telegraf",
+          "groupBy": [],
+          "hide": false,
+          "measurement": "BB-solar",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT \"devices:local:powermeter_P\" +\"devices:local:ac_InvOut_P\" FROM \"BB-solar\" WHERE $timeFilter",
+          "rawQuery": true,
+          "refId": "D",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "devices:local:powermeter_P"
+                ],
+                "type": "field"
+              }
+            ],
+            [
+              {
+                "params": [
+                  "devices:local:ac_InvOut_P"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": []
+        },
+        {
+          "alias": "Abregelung",
+          "datasource": "influxdb-telegraf",
+          "groupBy": [],
+          "hide": false,
+          "measurement": "BB-solar",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT \"devices:local_LimitEvuAbs\" FROM \"BB-solar\" WHERE $timeFilter",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "devices:local_HomeGrid_P"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": []
+        },
+        {
+          "datasource": "Sun and Moon",
+          "refId": "F",
+          "target": "sun_altitude"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Übersicht AC",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "transformations": [],
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "watt",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": "0",
+          "show": true
+        },
+        {
+          "format": "degree",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": "0",
+          "show": false
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "unit": "watt"
+        },
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 12,
+        "w": 24,
+        "x": 0,
+        "y": 14
+      },
+      "hiddenSeries": false,
+      "id": 4,
+      "legend": {
+        "avg": false,
+        "current": true,
+        "max": false,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "7.3.4",
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "alias": "Abregelung",
+          "groupBy": [],
+          "hide": true,
+          "measurement": "BB-solar",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT \"devices:local_LimitEvuAbs\" FROM \"BB-solar\" WHERE $timeFilter",
+          "rawQuery": true,
+          "refId": "C",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "devices:local_LimitEvuAbs"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": []
+        },
+        {
+          "alias": "DC1+DC2",
+          "groupBy": [],
+          "hide": false,
+          "measurement": "BB-solar",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT \"devices:local:pv1_P\" +\"devices:local:pv2_P\" FROM \"BB-solar\" WHERE $timeFilter",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "devices:local:pv1_P"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [
+                  "+"
+                ],
+                "type": "math"
+              }
+            ],
+            [
+              {
+                "params": [
+                  "devices:local:pv2_P"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": []
+        },
+        {
+          "alias": "DC1",
+          "groupBy": [],
+          "measurement": "BB-solar",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "B",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "devices:local:pv1_P"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": []
+        },
+        {
+          "alias": "DC2",
+          "groupBy": [],
+          "measurement": "BB-solar",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "D",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "devices:local:pv2_P"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": []
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "PV Erzeugung DC",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "watt",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": "0",
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": true,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": null,
+      "description": "siehe: https://solaranzeige.de/phpBB3/viewtopic.php?t=698\nAchtung: 120 ist die Sample-Rate!",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "align": null,
+            "filterable": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "kwatth"
+        },
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 6,
+        "w": 12,
+        "x": 0,
+        "y": 26
+      },
+      "hiddenSeries": false,
+      "hideTimeOverride": false,
+      "id": 10,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": false
+      },
+      "lines": false,
+      "linewidth": 1,
+      "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "7.3.4",
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [
+        {
+          "alias": "Hausverbrauch",
+          "color": "#8AB8FF",
+          "stack": false
+        },
+        {
+          "alias": "Einspeisung",
+          "color": "#96D98D"
+        },
+        {
+          "alias": "Eigenverbrauch",
+          "color": "#1F60C4"
+        },
+        {
+          "alias": "Netzbezug",
+          "color": "#FF7383"
+        },
+        {
+          "alias": "Erzeugung",
+          "color": "#37872D"
+        }
+      ],
+      "spaceLength": 10,
+      "stack": true,
+      "steppedLine": false,
+      "targets": [
+        {
+          "alias": "Erzeugung",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": true,
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT sum(\"devices:local:ac_P\")  /1000 /120  FROM \"BB-solar\" WHERE $timeFilter and \"devices:local:ac_P\" > 0 GROUP BY time(1d)  fill(null)",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": []
+        },
+        {
+          "alias": "Netzbezug",
+          "groupBy": [
+            {
+              "params": [
+                "1h"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": true,
+          "measurement": "BB-solar",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT (sum(\"devices:local_HomeGrid_P\"))  /1000 /120  FROM \"BB-solar\" WHERE $timeFilter  and (\"devices:local_HomeGrid_P\" )>0 GROUP BY time(1d)  fill(null)",
+          "rawQuery": true,
+          "refId": "E",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "devices:local:ac_P"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "sum"
+              }
+            ]
+          ],
+          "tags": []
+        },
+        {
+          "alias": "Einspeisung",
+          "groupBy": [
+            {
+              "params": [
+                "1h"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "measurement": "BB-solar",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT (sum(\"devices:local:ac_P\")-(sum(\"devices:local_HomeOwn_P\")+ sum(\"devices:local_HomeGrid_P\")))  /1000 /120  FROM \"BB-solar\" WHERE $timeFilter  and (\"devices:local:ac_P\" - (\"devices:local_HomeOwn_P\"+ \"devices:local_HomeGrid_P\"))>0 GROUP BY time(1d)  fill(null)",
+          "rawQuery": true,
+          "refId": "C",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "devices:local:ac_P"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "sum"
+              }
+            ]
+          ],
+          "tags": []
+        },
+        {
+          "alias": "Hausverbrauch",
+          "groupBy": [],
+          "hide": true,
+          "measurement": "BB-solar",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT (sum(\"devices:local_HomeOwn_P\") + sum(\"devices:local_HomeGrid_P\")) /1000 /120  FROM \"BB-solar\" WHERE  \"devices:local_HomeOwn_P\" +  \"devices:local_HomeGrid_P\" > 0 GROUP BY time(1d)  fill(null)",
+          "rawQuery": true,
+          "refId": "B",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "devices:local:ac_P"
+                ],
+                "type": "field"
+              }
+            ],
+            [
+              {
+                "params": [
+                  "devices:local_HomeOwn_P"
+                ],
+                "type": "field"
+              }
+            ],
+            [
+              {
+                "params": [
+                  "devices:local_HomePv_P"
+                ],
+                "type": "field"
+              }
+            ],
+            [
+              {
+                "params": [
+                  "devices:local_HomeGrid_P"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": []
+        },
+        {
+          "alias": "Eigenverbrauch",
+          "groupBy": [
+            {
+              "params": [
+                "1h"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "measurement": "BB-solar",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT (sum(\"devices:local_HomePv_P\"))  /1000 /120  FROM \"BB-solar\" WHERE $timeFilter  and (\"devices:local_HomePv_P\" )>0 GROUP BY time(1d)  fill(null)",
+          "rawQuery": true,
+          "refId": "F",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "devices:local:ac_P"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "sum"
+              }
+            ]
+          ],
+          "tags": []
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": "now-7d",
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Eigenverbrauch",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "transformations": [],
+      "transparent": true,
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "kwatth",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": true,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": null,
+      "description": "siehe: https://solaranzeige.de/phpBB3/viewtopic.php?t=698\nAchtung: 120 ist die Sample-Rate!",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "align": null,
+            "filterable": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "kwatth"
+        },
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 6,
+        "w": 12,
+        "x": 12,
+        "y": 26
+      },
+      "hiddenSeries": false,
+      "hideTimeOverride": false,
+      "id": 13,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": false
+      },
+      "lines": false,
+      "linewidth": 1,
+      "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "7.3.4",
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [
+        {
+          "alias": "Hausverbrauch",
+          "color": "#FFB357"
+        },
+        {
+          "alias": "Einspeisung",
+          "color": "#96D98D"
+        },
+        {
+          "alias": "Eigenverbrauch",
+          "color": "#1F60C4"
+        },
+        {
+          "alias": "Netzbezug",
+          "color": "#C4162A"
+        },
+        {
+          "alias": "Erzeugung",
+          "color": "#37872D"
+        }
+      ],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "alias": "Erzeugung",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": true,
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT sum(\"devices:local:ac_P\")  /1000 /120  FROM \"BB-solar\" WHERE $timeFilter and \"devices:local:ac_P\" > 0 GROUP BY time(1d)  fill(null)",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": []
+        },
+        {
+          "alias": "Netzbezug",
+          "groupBy": [
+            {
+              "params": [
+                "1h"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": true,
+          "measurement": "BB-solar",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT (sum(\"devices:local_HomeGrid_P\"))  /1000 /120  FROM \"BB-solar\" WHERE $timeFilter  and (\"devices:local_HomeGrid_P\" )>0 GROUP BY time(1d)  fill(null)",
+          "rawQuery": true,
+          "refId": "E",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "devices:local:ac_P"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "sum"
+              }
+            ]
+          ],
+          "tags": []
+        },
+        {
+          "alias": "Einspeisung",
+          "groupBy": [
+            {
+              "params": [
+                "1h"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": true,
+          "measurement": "BB-solar",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT (sum(\"devices:local:ac_P\")-(sum(\"devices:local_HomeOwn_P\")+ sum(\"devices:local_HomeGrid_P\")))  /1000 /120  FROM \"BB-solar\" WHERE $timeFilter  and (\"devices:local:ac_P\" - (\"devices:local_HomeOwn_P\"+ \"devices:local_HomeGrid_P\"))>0 GROUP BY time(1d)  fill(null)",
+          "rawQuery": true,
+          "refId": "C",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "devices:local:ac_P"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "sum"
+              }
+            ]
+          ],
+          "tags": []
+        },
+        {
+          "alias": "Hausverbrauch",
+          "groupBy": [],
+          "hide": false,
+          "measurement": "BB-solar",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT (sum(\"devices:local_HomeOwn_P\") + sum(\"devices:local_HomeGrid_P\")) /1000 /120  FROM \"BB-solar\" WHERE  \"devices:local_HomeOwn_P\" +  \"devices:local_HomeGrid_P\" > 0 GROUP BY time(1d)  fill(null)",
+          "rawQuery": true,
+          "refId": "B",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "devices:local:ac_P"
+                ],
+                "type": "field"
+              }
+            ],
+            [
+              {
+                "params": [
+                  "devices:local_HomeOwn_P"
+                ],
+                "type": "field"
+              }
+            ],
+            [
+              {
+                "params": [
+                  "devices:local_HomePv_P"
+                ],
+                "type": "field"
+              }
+            ],
+            [
+              {
+                "params": [
+                  "devices:local_HomeGrid_P"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": []
+        },
+        {
+          "alias": "Eigenverbrauch",
+          "groupBy": [
+            {
+              "params": [
+                "1h"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "measurement": "BB-solar",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT (sum(\"devices:local_HomePv_P\"))  /1000 /120  FROM \"BB-solar\" WHERE $timeFilter  and (\"devices:local_HomePv_P\" )>0 GROUP BY time(1d)  fill(null)",
+          "rawQuery": true,
+          "refId": "F",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "devices:local:ac_P"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "sum"
+              }
+            ]
+          ],
+          "tags": []
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": "now-7d",
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Autarkie",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "transformations": [],
+      "transparent": true,
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "decimals": 1,
+          "format": "kwatth",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    }
+  ],
+  "refresh": "30s",
+  "schemaVersion": 26,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": []
+  },
+  "time": {
+    "from": "now-6h",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "",
+  "title": "Solaranlage Kostal",
+  "uid": "0KCI3f0Gz",
+  "version": 44
+}
