@@ -46,4 +46,4 @@ Grafana with the user "admin" and the password from the docker-compose.yaml line
 
 ### Open
 * Backup influxdb
-* general beauttfying
+* general beautifying
